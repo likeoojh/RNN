@@ -54,7 +54,7 @@ class MyEngine(Engine):
 
         # Calculate accuracy only if 'y' is LongTensor,
         # which means that 'y' is one-hot representation.
-        if isinstance(y, torch.LongTensor) or isinstance(y, torch.cuda.LongTensor):
+        if isinstance(y, torch.LongTensor) or isinstance(y, torch.cuda.LongTensor) or isinstance(y, torch.Tensor):
             accuracy = (torch.argmax(y_hat, dim=-1) == y).sum() / float(y.size(0))
         else:
             accuracy = 0
@@ -91,7 +91,7 @@ class MyEngine(Engine):
 
             loss = engine.crit(y_hat, y)
 
-            if isinstance(y, torch.LongTensor) or isinstance(y, torch.cuda.LongTensor):
+            if isinstance(y, torch.LongTensor) or isinstance(y, torch.cuda.LongTensor) or isinstance(y, torch.Tensor):
                 accuracy = (torch.argmax(y_hat, dim=-1) == y).sum() / float(y.size(0))
             else:
                 accuracy = 0

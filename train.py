@@ -15,7 +15,7 @@ def define_argparser():
     p = argparse.ArgumentParser()
 
     p.add_argument('--model_fn', required=True)
-    p.add_argument('--gpu_id', type=int, default=0 if torch.cuda.is_available() else -1)
+    p.add_argument('--gpu_id', type=int, default=0 if torch.backends.mps.is_available() else -1) # torch.cuda.is_available()
 
     p.add_argument('--train_ratio', type=float, default=.8)
 
@@ -57,7 +57,7 @@ def get_model(config):
 
 def main(config):
     # Set device based on user defined configuration.
-    device = torch.device('cpu') if config.gpu_id < 0 else torch.device('cuda:%d' % config.gpu_id)
+    device = torch.device('cpu') if config.gpu_id < 0 else torch.device('mps:%d' % config.gpu_id)
 
     train_loader, valid_loader, test_loader = get_loaders(config)
 
